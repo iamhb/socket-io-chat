@@ -22,19 +22,33 @@
             });
             socket.on('userSet', function(data) {
                 user = data.username;
-                document.body.innerHTML = '<input type = "text" id = "message">\
+                document.body.innerHTML = '<center><input type = "text" id = "message">\
                 <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
-                <div id="message-container" class="message"></div>';
+                <div id="message-container" class="message"></div></center>';
             });
             function sendMessage() {
                 var msg = document.getElementById('message').value;
                 if(msg) {
+                    document.getElementById('message').value ="";
                     socket.emit('msg', {message: msg, user: user, date: date, time: time });
                 }
             }
             socket.on('newmsg', function(data) {
                 if(user) {
-                    document.getElementById('message-container').innerHTML += '<div> <b>' + 
+                    document.getElementById('message-container').innerHTML +=
+                  /*   <div class="container">
+                        <h2>Panels with Contextual Classes</h2>
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                            <div class="panel-heading">Panel with panel-default class</div>
+                            <div class="panel-body">Panel Content</div>
+                            </div>
+                        </div>
+                        </div>
+                    
+                     */
+                    
+                    '<div> <b>' + 
                     data.user + '</b>: ' + data.message + '<br>' + data.date + '<br>' + data.time +'</div>'
                 }
             })
